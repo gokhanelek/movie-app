@@ -1,0 +1,19 @@
+.header-container {
+    background-color: var(--third-color);
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        margin: auto;
+        max-width: 1200px;
+
+        .header-movie-add-btn {
+            width: auto;
+            min-width: 70px;
+            padding: 8px;
+            background-color: var(--second-color);
+        }
+    }
+}
