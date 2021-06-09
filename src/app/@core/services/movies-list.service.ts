@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movie, MoviesListResponse } from '../models/movie-list';
+import { Movie } from '../models/movie-list';
 import { BaseService, HttpClientService } from './base.service';
 
 const Endpoints = {
   Controller: '',
-  MoviesList: '/?apikey={apikey}&s={s}',
+  Movies: '/movies',
+  MovieSearch: '/movies?Title={s}',
 };
 
 @Injectable({
@@ -17,12 +18,16 @@ export class MoviesListService extends BaseService<any, any> {
     super(httpClient, Endpoints.Controller);
   }
 
-  getMovies(search: string): Observable<MoviesListResponse> {
+  getMovies(): Observable<Movie[]> {
+    const fullPath = this.createUrlWithParams(Endpoints.Movies);
+    return this.client.get<Movie[]>(fullPath);
+  }
+
+  getSearchMovies(search: string): Observable<Movie[]> {
     let json = {
       s: search
     }
-
-    const fullPath = this.createUrlWithParams(Endpoints.MoviesList, json);
-    return this.client.get<MoviesListResponse>(fullPath);
+    const fullPath = this.createUrlWithParams(Endpoints.MovieSearch, json);
+    return this.client.get<Movie[]>(fullPath);
   }
 }

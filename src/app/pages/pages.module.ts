@@ -3,6 +3,7 @@ import { MoviesListComponent } from './movies-list/movies-list.component';
 import { MovieAddComponent } from './movie-add/movie-add.component';
 import { MovieUpdateComponent } from './movie-update/movie-update.component';
 import { PagesRoutingModule } from './pages-routing.module';
+import { SharedModule } from '../shared.module';
 
 
 
@@ -14,6 +15,7 @@ import { PagesRoutingModule } from './pages-routing.module';
   ],
   imports: [
     PagesRoutingModule,
+    SharedModule,
   ]
 })
 export class PagesModule { }

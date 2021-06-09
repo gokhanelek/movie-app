@@ -1,1 +1,27 @@
-<p>movies-list works!</p>
+<div class="movies-list-container">
+    <div class="filter-container">
+        <mat-form-field appearance="fill" class="sorting-container">
+            <mat-select [(ngModel)]="selectedSort" (selectionChange)="changeSorting($event.value)">
+                <mat-option *ngFor="let sort of sortList" [value]="sort.value">
+                    {{sort.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="search-container">
+            <input matInput [(ngModel)]="search" (ngModelChange)="changeSearch()" placeholder="Film ara">
+        </mat-form-field>
+    </div>
+    <div class="movies-list" *ngIf="isResponse;else noContentEntered">
+        <div class="movie" *ngFor="let movie of movies">
+            <img src="{{movie.Poster}}" alt="movie picture" srcset="">
+        </div>
+    </div>
+    <div *ngIf="totalResult>10" class="btn">
+        <button mat-raised-button color="primary" (click)="getMoreMovies()">Daha Fazla Yükle</button>
+    </div>
+    <ng-template #noContentEntered>
+        <div class="content">
+            <span>Henüz içerik girilmedi</span>
+        </div>
+    </ng-template>
+</div>

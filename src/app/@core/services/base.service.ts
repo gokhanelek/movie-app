@@ -58,12 +58,12 @@ export class HttpClientService {
 export class DataService {
   protected BASE_API_URL = environment.api_base_url;
   protected client: HttpClientService;
-  apikey: string = '669b18e6';
+  // private apikey: string = environment.apiKey;
   constructor(client: HttpClientService) {
     this.client = client;
   }
   public createUrlWithParams(urlPath: string, json: Object = null): string {
-    json['apikey'] = this.apikey;
+    // json['apikey'] = this.apikey;
 
     for (const key in json) {
       if (json.hasOwnProperty(key)) {
