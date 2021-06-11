@@ -1,1 +1,23 @@
-<p>movie-update works!</p>
+<div class="movie-update-container">
+    <form class="movie-add-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2>Film Ekle</h2>
+        <mat-form-field appearance="fill">
+            <mat-label>Adı</mat-label>
+            <input matInput [value]="movie?.Title" [disabled]="isDisabled">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Görseli</mat-label>
+            <input matInput [value]="movie?.Poster" [disabled]="isDisabled">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Puanı</mat-label>
+            <input matInput type="text" formControlName="rate" min="10" onlyNumbers autocomplete="off">
+        </mat-form-field>
+        <div *ngIf="form.get('rate').touched && form.get('rate').invalid" class="alert alert-danger">
+            <div *ngIf="form.get('rate').errors.required">Puan zorunlu</div>
+            <div *ngIf="form.get('rate').errors.max">0 ile 10 arasında verebilirsiniz</div>
+        </div>
+        <button mat-raised-button color="primary" class="header-movie-add-btn" type="submit"
+            [disabled]="!form.valid ">Güncelle</button>
+    </form>
+</div>

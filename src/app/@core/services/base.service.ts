@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError as observableThrowError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable()
 export class HttpClientService {
   protected router: Router;
@@ -16,8 +17,6 @@ export class HttpClientService {
   }
 
   createAuthorizationHeader(headers: HttpHeaders): HttpHeaders {
-
-    // headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Accept', '*/*');
     return headers;
   }
@@ -47,6 +46,18 @@ export class HttpClientService {
       .pipe(catchError(this.handleError));
   }
 
+  public delete<T>(url: string, data: string = null): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = this.createAuthorizationHeader(headers);
+
+    const httpOptions = { headers: headers, body: data };
+
+    return this.http
+      .delete<T>(url, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+
   public handleError(response: any) {
     const errorBody = response.error;
     return observableThrowError(errorBody);
@@ -57,13 +68,14 @@ export class HttpClientService {
 @Injectable()
 export class DataService {
   protected BASE_API_URL = environment.api_base_url;
+  protected OMDB_API_URL = environment.api_omdb_url;
   protected client: HttpClientService;
-  // private apikey: string = environment.apiKey;
+  protected apikey: string = environment.apiKey;
+
   constructor(client: HttpClientService) {
     this.client = client;
   }
   public createUrlWithParams(urlPath: string, json: Object = null): string {
-    // json['apikey'] = this.apikey;
 
     for (const key in json) {
       if (json.hasOwnProperty(key)) {
@@ -74,7 +86,21 @@ export class DataService {
       }
     }
 
-    return this.BASE_API_URL + urlPath;
+    return this.BASE_API_URL + encodeURI(urlPath);
+  }
+  public createOmdbUrlWithParams(urlPath: string, json: Object = null): string {
+    json['apikey'] = this.apikey;
+
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        urlPath = urlPath.replace(
+          `{${key}}`,
+          json[key] == null ? '' : json[key],
+        );
+      }
+    }
+
+    return this.OMDB_API_URL + encodeURI(urlPath);
   }
 }
 

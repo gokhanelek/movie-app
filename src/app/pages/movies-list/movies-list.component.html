@@ -13,7 +13,17 @@
     </div>
     <div class="movies-list" *ngIf="isResponse;else noContentEntered">
         <div class="movie" *ngFor="let movie of movies">
-            <img src="{{movie.Poster}}" alt="movie picture" srcset="">
+            <div class="movie-info">
+                {{movie.Title}}{{movie.rate}}
+            </div>
+            <a [routerLink]="['/movie-update',movie.Id]">
+                <img src="{{movie.Poster}}" alt="movie picture" srcset="">
+            </a>
+
+            <button mat-fab color="success" class="remove-img-btn" aria-label="Delete button a movie"
+                (click)="openDialog(movie.Title)">
+                <mat-icon>delete</mat-icon>
+            </button>
         </div>
     </div>
     <div *ngIf="totalResult>10" class="btn">

@@ -1,0 +1,20 @@
+.movie-update-container {
+    display: flex;
+    justify-content: center;
+
+    .movie-add-form {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        margin-top: 40px;
+
+        h2 {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .alert-danger {
+            color: red;
+        }
+    }
+}

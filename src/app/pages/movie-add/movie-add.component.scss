@@ -1,0 +1,28 @@
+.movie-add-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    .filter-container {
+        position: absolute;
+        left: 0;
+    }
+
+    .movie-add-form {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        margin-top: 40px;
+
+        form {
+            h2 {
+                text-align: center;
+                font-weight: 600;
+            }
+
+            .alert-danger {
+                color: red;
+            }
+        }
+    }
+}

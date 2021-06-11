@@ -1,9 +1,9 @@
 export enum SortType {
-    topRate = 'En yüksek puanlı filmler',
-    lowestRate = 'En düşük puanlı filmler',
+    topRate = 1,
+    lowestRate = 2,
 }
 
 export interface SelectItem {
-    value: string;
+    value: any;
     viewValue: string;
 }

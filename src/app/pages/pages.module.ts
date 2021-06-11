@@ -4,6 +4,7 @@ import { MovieAddComponent } from './movie-add/movie-add.component';
 import { MovieUpdateComponent } from './movie-update/movie-update.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared.module';
+import { MovieDeleteComponent } from './movie-delete/movie-delete.component';
 
 
 
@@ -11,7 +12,8 @@ import { SharedModule } from '../shared.module';
   declarations: [
     MoviesListComponent,
     MovieAddComponent,
-    MovieUpdateComponent
+    MovieUpdateComponent,
+    MovieDeleteComponent
   ],
   imports: [
     PagesRoutingModule,
