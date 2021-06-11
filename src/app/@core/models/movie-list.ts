@@ -1,5 +1,5 @@
 export class Movie {
-    Id: number;
+    id: number;
     Poster: string;
     Title: string;
     Type: string;

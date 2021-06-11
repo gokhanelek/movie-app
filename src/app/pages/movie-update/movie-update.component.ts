@@ -23,9 +23,7 @@ export class MovieUpdateComponent implements OnInit {
     private notificationService: NotificationService,
     private moviesListService: MoviesListService,
   ) {
-    let movieResponse: any = this.activatedRoute.snapshot.data['movieResponse'];
-    this.movie = movieResponse[0];
-    console.log(this.movie);
+    this.movie = this.activatedRoute.snapshot.data['movieResponse'];
     this.validationForm();
   }
 
@@ -40,10 +38,11 @@ export class MovieUpdateComponent implements OnInit {
 
   onSubmit() {
     this.movie.rate = this.form.get('rate').value;
-    this.notificationService.showSuccess(`${this.movie.Title} filmi güncellenmiştir.`, 'Başarılı');
-    // this.moviesListService.updateMovie(this.movie).subscribe(() => {
-    //   this.notificationService.showSuccess(`${this.movie.Title} filmi güncellenmiştir.`, 'Başarılı');
-    // });
+    this.moviesListService.updateMovie(this.movie.id, this.movie).subscribe(() => {
+      this.notificationService.showSuccess(`${this.movie.Title} filmi güncellenmiştir.`, 'Başarılı');
+    }, err => {
+      alert(err.message);
+    });
   }
 
 }

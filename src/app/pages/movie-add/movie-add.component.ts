@@ -18,7 +18,6 @@ export class MovieAddComponent implements OnInit {
   movie: Movie;
   isDisabled: boolean = true;
   isForm: boolean = false;
-  maxId: number;
 
   constructor(
     private moviesListService: MoviesListService,
@@ -28,21 +27,12 @@ export class MovieAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.validationForm();
-    this.getMaxId();
   }
 
   validationForm() {
     this.form = this.fb.group({
       rate: ['', [Validators.required, Validators.max(10)]]
     })
-  }
-
-  getMaxId() {
-    this.moviesListService.getMovies().subscribe(x => {
-      this.maxId = Math.max.apply(Math, x.map(function (o) { return o.Id; }))
-    }, err => {
-      alert(err.message);
-    });
   }
 
   changeSearch() {
@@ -75,12 +65,11 @@ export class MovieAddComponent implements OnInit {
 
   onSubmit() {
     this.movie.rate = this.form.get('rate').value;
-    this.movie.Id = this.maxId + 1;
-    this.notificationService.showSuccess(`${this.movie.Title} filmi eklenmiştir.`, 'Başarılı');
-    // this.moviesListService.addMovie(this.movie).subscribe(() => {
-    //   this.notificationService.showSuccess(`${this.movie.Title} filmi eklenmiştir.`, 'Başarılı');
-    //   this.getMaxId();
-    // });
+    this.moviesListService.addMovie(this.movie).subscribe(() => {
+      this.notificationService.showSuccess(`${this.movie.Title} filmi eklenmiştir.`, 'Başarılı');
+    }, err => {
+      alert(err.message);
+    });
   }
 
 }

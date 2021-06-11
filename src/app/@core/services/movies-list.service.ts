@@ -6,12 +6,12 @@ import { BaseService, HttpClientService } from './base.service';
 
 const Endpoints = {
   Controller: '',
-  Movie: '/movies?Id={Id}',
+  Movie: '/movies/',
   Movies: '/movies?q={q}&_sort={sort_by}&_order={order_by}',
   MovieSearch: '/movies?q={q}&_sort={sort_by}&_order={order_by}',
-  DeleteMovie: '/movies',
-  AddMovie: '/movies',
-  UpdateMovie: '/movies',
+  DeleteMovie: '/movies/',
+  AddMovie: '/movies/',
+  UpdateMovie: '/movies/',
   OmdbMoviesSearch: '/?apikey={apikey}&s={s}'
 };
 
@@ -24,18 +24,17 @@ export class MoviesListService extends BaseService<any, any> {
     super(httpClient, Endpoints.Controller);
   }
 
-  getMovie(id: string): Observable<Movie> {
-    let json = {
-      Id: id
-    }
+  getMovie(id: any): Observable<Movie> {
 
-    const fullPath = this.createUrlWithParams(Endpoints.Movie, json);
-    return this.client.get<Movie>(fullPath);
+    let movieId = Number(id);
+
+    const fullPath = this.createUrlWithParams(Endpoints.Movie);
+    return this.client.get<Movie>(fullPath + movieId);
   }
 
   getMovies(
     search: string = '',
-    sort_by: any = 'Id',
+    sort_by: any = 'id',
     order_by: string = OrderOptions.Desc,
   ): Observable<Movie[]> {
 
@@ -62,17 +61,14 @@ export class MoviesListService extends BaseService<any, any> {
     return this.client.post<any>(fullPath, JSON.stringify(request));
   }
 
-  updateMovie(request: Movie): Observable<Movie> {
+  updateMovie(id: number, request: Movie): Observable<Movie> {
     const fullPath = this.createUrlWithParams(Endpoints.UpdateMovie);
-    return this.client.post<any>(fullPath, JSON.stringify(request));
+    return this.client.put<Movie>(fullPath + id, JSON.stringify(request));
   }
 
-  deleteMovie(id: string): Observable<any> {
-    let json = {
-      id: id,
-    }
+  deleteMovie(id: number): Observable<any> {
     const fullPath = this.createUrlWithParams(Endpoints.DeleteMovie);
-    return this.client.delete<any>(fullPath, JSON.stringify(json));
+    return this.client.delete<any>(fullPath + id);
   }
 
 }

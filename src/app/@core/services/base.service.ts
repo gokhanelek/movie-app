@@ -38,9 +38,13 @@ export class HttpClientService {
   public post<T>(url: string, data: string = null, isEncoded: boolean = false): Observable<any> {
     let headers = new HttpHeaders();
     headers = this.createAuthorizationHeader(headers);
+    headers = headers.append('Content-Type', 'application/json');
+
     if (isEncoded) {
       headers = headers.append('Accept-Encoding', 'gzip, deflate, br');
     }
+
+
     return this.http
       .post<T>(url, data, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -56,6 +60,17 @@ export class HttpClientService {
       .delete<T>(url, httpOptions)
       .pipe(catchError(this.handleError));
   }
+
+  public put<T>(url: string, data: string = null): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = this.createAuthorizationHeader(headers);
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.http
+      .put<T>(url, data, { headers: headers })
+      .pipe(catchError(this.handleError));
+  }
+
 
 
   public handleError(response: any) {

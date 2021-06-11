@@ -55,7 +55,7 @@ export class MoviesListComponent implements OnInit {
   changeSearch() {
     this.moviesListService.getMovies(this.search).subscribe(res => {
       this.totalResult = res.length;
-      
+
       if (this.totalResult === 0) {
         this.isResponse = false;
         return;
@@ -93,9 +93,9 @@ export class MoviesListComponent implements OnInit {
     this.getMovies();
   }
 
-  openDialog(title: string): void {
+  openDialog(id: number, title: string): void {
     const dialogRef = this.dialog.open(MovieDeleteComponent, {
-      width: 'auto', disableClose: true, data: { name: title },
+      width: 'auto', disableClose: true, data: { id: id, title: title },
     });
   }
 
